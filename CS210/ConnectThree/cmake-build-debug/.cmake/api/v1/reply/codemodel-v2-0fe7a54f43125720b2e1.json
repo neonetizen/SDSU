@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/justin/CLionProjects/ConnectThree/cmake-build-debug",
-		"source" : "/home/justin/CLionProjects/ConnectThree"
+		"build" : "/home/justin/SDSU/CS210/ConnectThree/cmake-build-debug",
+		"source" : "/home/justin/SDSU/CS210/ConnectThree"
 	},
 	"version" : 
 	{

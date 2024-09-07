@@ -1,4 +1,4 @@
-# Install script for directory: /home/justin/CLionProjects/ConnectThree
+# Install script for directory: /home/justin/SDSU/CS210/ConnectThree
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/justin/CLionProjects/ConnectThree/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/justin/SDSU/CS210/ConnectThree/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

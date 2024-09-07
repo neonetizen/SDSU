@@ -21,6 +21,11 @@
 		{
 			"isCMake" : true,
 			"isExternal" : true,
+			"path" : "/home/justin/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeUnixFindMake.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
 			"path" : "/home/justin/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake"
 		},
 		{
@@ -778,8 +783,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/home/justin/CLionProjects/ConnectThree/cmake-build-debug",
-		"source" : "/home/justin/CLionProjects/ConnectThree"
+		"build" : "/home/justin/SDSU/CS210/ConnectThree/cmake-build-debug",
+		"source" : "/home/justin/SDSU/CS210/ConnectThree"
 	},
 	"version" : 
 	{
