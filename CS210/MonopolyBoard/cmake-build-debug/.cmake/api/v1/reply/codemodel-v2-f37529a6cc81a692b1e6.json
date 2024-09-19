@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/justin/SDSU/CS210/MonopolyBoard/cmake-build-debug",
-		"source" : "/home/justin/SDSU/CS210/MonopolyBoard"
+		"build" : "/home/boosted/SDSU/CS210/MonopolyBoard/cmake-build-debug",
+		"source" : "/home/boosted/SDSU/CS210/MonopolyBoard"
 	},
 	"version" : 
 	{

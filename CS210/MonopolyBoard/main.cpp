@@ -19,6 +19,8 @@ public:
     int value;
     int rent;
 
+    MonopolyBoard() : value(0), rent(0) {}
+
     MonopolyBoard(const string &propertyName, const string &propertyColor,  int value,  int rent) {
         this->propertyName = propertyName;
         this->propertyColor = propertyColor;
@@ -26,16 +28,17 @@ public:
         this->rent = rent;
     }
 
-    bool isEqual(const MonopolyBoard& other) {
+    bool isEqual(const MonopolyBoard& other) const {
         if (this->propertyName != other.propertyName) {return false;}
         if (this->propertyColor != other.propertyColor) {return false;}
         if (this->value != other.value) {return false;}
         if (this->rent != other.rent) {return false;}
+        return true;
     }
 
-    void print() {
+    void print() const {
         cout << "(" << this->propertyName << "," << this->propertyColor << ","
-             << this->value << "," << this->rent << ")" << endl;
+             << this->value << "," << this->rent << ")";
     }
 };
 
@@ -61,7 +64,18 @@ public:
     }
 
     // Mandatory tasks
-    void insertAtHead(Node<T> data) {
+    void insertAtHead(MonopolyBoard(data)) {
+        auto* newNode = new Node<T>(data);
+        if (headNode == nullptr) {
+            headNode = new Node<T>(data);
+            headNode->nextNode = nullptr;
+        } else {
+            newNode->nextNode = headNode;
+            headNode = newNode;
+        }
+    }
+
+    void insertAtTail(MonopolyBoard(data)) {
         if (headNode == nullptr) {
             headNode = new Node<T>(data);
             headNode->nextNode = nullptr;
@@ -74,21 +88,57 @@ public:
             currNode->nextNode->nextNode = nullptr;
         }
     }
-    void insertAtTail() {}
-    void insertAtPosition() {}
+
+    void insertAtPosition(MonopolyBoard(data), int position) {
+        auto* newNode = new Node<T>(data);
+        if (headNode == nullptr) {
+            headNode = newNode;
+            headNode->nextNode = nullptr;
+        } else if (position == 0) {
+            newNode->nextNode = headNode;
+            headNode = newNode;
+        } else {
+            auto* currNode = headNode;
+            for (int i = 0; i < position; i++) {
+                currNode = currNode->nextNode;
+            }
+            newNode->nextNode = currNode->nextNode;
+        }
+    }
     void deleteAtHead() {}
     void deleteAtTail() {}
     void deleteAtPosition() {}
     void search(T value) {}
-    void printList() {}
+    void printList() {
+        Node<T>* currNode = headNode;
+        if (currNode == nullptr) {
+            cout << "Empty List" << endl;
+        } else {
+            do {
+                currNode->data.print();
+                currNode = currNode->nextNode;
+                if (currNode != headNode) {
+                    cout << "->";
+                }
+            } while (currNode != headNode);
+        }
+    }
 
     // Optional basic
     void reverseCList() {}
+
     void sortCLList() {}
+
     void printHeadNode() {}
+
     void printLastNode() {}
+
     void isListEmpty() {}
-    void countNodes() {}
+
+    void countNodes() {
+        Node<T>* currNode = headNode;
+
+    }
 
     // Optional advanced
     void convertCLList() {}
@@ -102,9 +152,9 @@ public:
 int main() {
     CircularLinkedList<MonopolyBoard> list;
 
-    list.insertAtHead(MonopolyBoard("place", "blue", 10, 5));
+    list.insertAtHead(MonopolyBoard("Mediterranean Avenue", "Brown", 60, 2));
 
-    list.insertAtTail();
+    list.insertAtTail(MonopolyBoard("Baltic Avenue","Brown",60,4));
 
     list.insertAtPosition();
 
@@ -113,6 +163,8 @@ int main() {
     list.deleteAtTail();
 
     list.deleteAtPosition();
+
+    list.printList();
 
     // Optional basic
     list.reverseCList();
