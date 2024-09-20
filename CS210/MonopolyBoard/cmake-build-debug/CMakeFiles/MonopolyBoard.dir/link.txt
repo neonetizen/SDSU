@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/MonopolyBoard.dir/main.cpp.o -o MonopolyBoard

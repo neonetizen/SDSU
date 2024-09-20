@@ -1,3 +1,0 @@
-/home/boosted/SDSU/CS210/MonopolyBoard/cmake-build-debug/CMakeFiles/MonopolyBoard.dir
-/home/boosted/SDSU/CS210/MonopolyBoard/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/boosted/SDSU/CS210/MonopolyBoard/cmake-build-debug/CMakeFiles/rebuild_cache.dir
