@@ -64,51 +64,89 @@ public:
     }
 
     // Mandatory tasks
-    void insertAtHead(MonopolyBoard(data)) {
+    void insertAtHead(T data) {
         auto* newNode = new Node<T>(data);
         if (headNode == nullptr) {
             headNode = new Node<T>(data);
-            headNode->nextNode = nullptr;
+            headNode->nextNode = headNode;
         } else {
-            newNode->nextNode = headNode;
-            headNode = newNode;
-        }
-    }
-
-    void insertAtTail(MonopolyBoard(data)) {
-        if (headNode == nullptr) {
-            headNode = new Node<T>(data);
-            headNode->nextNode = nullptr;
-        } else {
-            Node<T>* currNode = headNode;
-            while (currNode->nextNode != nullptr) {
-                currNode = currNode->nextNode;
+            auto* tailNode = headNode;
+            while(tailNode->nextNode != headNode) {
+                tailNode = tailNode->nextNode;
             }
-            currNode->nextNode = new Node<T>(data);
-            currNode->nextNode->nextNode = nullptr;
+            newNode->nextNode = headNode;
+            headNode = newNode;
+            tailNode->nextNode = headNode;
         }
     }
 
-    void insertAtPosition(MonopolyBoard(data), int position) {
-        auto* newNode = new Node<T>(data);
+    void insertAtTail(T data) {
         if (headNode == nullptr) {
-            headNode = newNode;
-            headNode->nextNode = nullptr;
-        } else if (position == 0) {
-            newNode->nextNode = headNode;
-            headNode = newNode;
+            headNode = new Node<T>(data);
+            headNode->nextNode = headNode;
+        } else {
+            Node<T>* tailNode = headNode;
+            while (tailNode->nextNode != headNode) {
+                tailNode = tailNode->nextNode;
+            }
+            tailNode->nextNode = new Node<T>(data);
+            tailNode->nextNode->nextNode = headNode;
+        }
+    }
+
+    void insertAtPosition(MonopolyBoard(data), const int position) {
+        if (position < 0) {
+            cout << "Please enter a positive position" << endl;
+            return;
+        }
+        if (position == 0) {
+            insertAtHead(data);
+            return;
+        }
+        if (headNode == nullptr) {
+            headNode = new Node<T>(data);
+            headNode->nextNode = headNode;
         } else {
             auto* currNode = headNode;
-            for (int i = 0; i < position; i++) {
+            for (int i = 0; i < position-1; i++) {
                 currNode = currNode->nextNode;
+                if (currNode == headNode && currNode->nextNode != headNode) {
+                    cout << "Invalid insertion at position " << position << endl;
+                    return;
+                }
             }
-            newNode->nextNode = currNode->nextNode;
+            Node<T>* tempNode = currNode->nextNode;
+            currNode->nextNode = new Node<T>(data);
+            currNode->nextNode->nextNode = tempNode;
         }
     }
-    void deleteAtHead() {}
+
+    /* TODO: fix deleteAtHead */
+    void deleteAtHead() {
+        if (headNode == nullptr) {
+            cout << "Empty List" << endl;
+        } else {
+            Node<T>* currNode = headNode;
+            if (currNode->nextNode == headNode) {
+                delete headNode;
+            } else {
+                while (currNode->nextNode != headNode) {
+                    currNode = currNode->nextNode;
+                }
+                Node<T>* toDelete = headNode;
+                headNode = headNode->nextNode;
+                currNode->nextNode = headNode;
+                delete toDelete;
+            }
+        }
+    }
+
     void deleteAtTail() {}
+
     void deleteAtPosition() {}
+
     void search(T value) {}
+
     void printList() {
         Node<T>* currNode = headNode;
         if (currNode == nullptr) {
@@ -142,8 +180,11 @@ public:
 
     // Optional advanced
     void convertCLList() {}
+
     void updateNodeValue() {}
+
     void displaySpecificColorNode() {}
+
     void mergeCLList() {}
 
 };
@@ -154,9 +195,9 @@ int main() {
 
     list.insertAtHead(MonopolyBoard("Mediterranean Avenue", "Brown", 60, 2));
 
-    list.insertAtTail(MonopolyBoard("Baltic Avenue","Brown",60,4));
+    //list.insertAtTail(MonopolyBoard("Baltic Avenue","Brown",60,4));
 
-    list.insertAtPosition();
+    //list.insertAtPosition(MonopolyBoard("a", "a", 1, 1), 0);
 
     list.deleteAtHead();
 
