@@ -70,14 +70,16 @@ public:
             headNode = new Node<T>(data);
             headNode->nextNode = headNode;
         } else {
-            auto* tailNode = headNode;
-            while(tailNode->nextNode != headNode) {
-                tailNode = tailNode->nextNode;
+            auto* currNode = headNode;
+            while(currNode->nextNode != headNode) {
+                currNode = currNode->nextNode;
             }
             newNode->nextNode = headNode;
             headNode = newNode;
-            tailNode->nextNode = headNode;
+            currNode->nextNode = headNode;
+
         }
+        cout << "Inserted "; data.print(); cout << " at head" << endl;
     }
 
     void insertAtTail(T data) {
@@ -85,25 +87,22 @@ public:
             headNode = new Node<T>(data);
             headNode->nextNode = headNode;
         } else {
-            Node<T>* tailNode = headNode;
-            while (tailNode->nextNode != headNode) {
-                tailNode = tailNode->nextNode;
+            auto* currNode = headNode;
+            // traverses list until 1 before end is reached
+            while (currNode->nextNode != headNode) {
+                currNode = currNode->nextNode;
             }
-            tailNode->nextNode = new Node<T>(data);
-            tailNode->nextNode->nextNode = headNode;
+            currNode->nextNode = new Node<T>(data);
+            currNode->nextNode->nextNode = headNode;
         }
     }
 
-    void insertAtPosition(MonopolyBoard(data), const int position) {
+    void insertAtPosition(T data, const int position) {
         if (position < 0) {
             cout << "Please enter a positive position" << endl;
-            return;
-        }
-        if (position == 0) {
+        } else if (position == 0) {
             insertAtHead(data);
-            return;
-        }
-        if (headNode == nullptr) {
+        } else if (headNode == nullptr) {
             headNode = new Node<T>(data);
             headNode->nextNode = headNode;
         } else {
@@ -118,17 +117,18 @@ public:
             Node<T>* tempNode = currNode->nextNode;
             currNode->nextNode = new Node<T>(data);
             currNode->nextNode->nextNode = tempNode;
+            cout << "Inserted "; data.print(); cout << " at position " << position << endl;
         }
     }
 
-    /* TODO: fix deleteAtHead */
     void deleteAtHead() {
         if (headNode == nullptr) {
             cout << "Empty List" << endl;
         } else {
-            Node<T>* currNode = headNode;
+            auto* currNode = headNode;
             if (currNode->nextNode == headNode) {
-                delete headNode;
+                headNode->nextNode = nullptr;
+                headNode = nullptr;
             } else {
                 while (currNode->nextNode != headNode) {
                     currNode = currNode->nextNode;
@@ -136,16 +136,66 @@ public:
                 Node<T>* toDelete = headNode;
                 headNode = headNode->nextNode;
                 currNode->nextNode = headNode;
+                cout << "Deleted "; toDelete->data.print(); cout << " from head." << endl;
                 delete toDelete;
             }
         }
     }
 
-    void deleteAtTail() {}
+    void deleteAtTail() {
+        if (headNode == nullptr) {
+            cout << "Empty List" << endl;
+        } else {
+            auto* currNode = headNode;
+            if (currNode->nextNode == headNode) {
+                headNode->nextNode = nullptr;
+                headNode = nullptr;
+            } else {
+                while (currNode->nextNode->nextNode != headNode) {
+                    currNode = currNode->nextNode;
+                }
+                Node<T>* toDelete = currNode->nextNode;
+                currNode->nextNode = headNode;
+                cout << "Deleted "; toDelete->data.print(); cout << " from tail." << endl;
+                delete toDelete;
+            }
+        }
+    }
 
-    void deleteAtPosition() {}
+    void deleteAtPosition(const int position) {
+        if (position < 0) {
+            cout << "Please enter a positive position" << endl;
+        } else if (position == 0) {
+            deleteAtHead();
+        } else if (headNode == nullptr) {
+            cout << "Empty List" << endl;
+        } else {
+            /* easiest way for me to check for valid positions without affecting performance or complexity is to
+             * get length list and compare, so I can just reuse the tail deletion or throw away delete request */
+            const int length = this->countNodes();
+            if (position == length) {
+                deleteAtTail();
+                return;
+            }
+            if (position > length) {
+                cout << "Invalid deletion at position " << position << endl;
+                return;
+            }
 
-    void search(T value) {}
+            auto* currNode = headNode;
+            for (int i = 0; i < position-1; i++) {
+                currNode = currNode->nextNode;
+            }
+            Node<T>* toDelete = currNode->nextNode;
+            currNode->nextNode = currNode->nextNode->nextNode;
+            cout << "Deleted "; toDelete->data.print(); cout << " from position " << position << endl;
+            delete toDelete;
+        }
+    }
+
+    void search(T value) {
+
+    }
 
     void printList() {
         Node<T>* currNode = headNode;
@@ -159,6 +209,7 @@ public:
                     cout << "->";
                 }
             } while (currNode != headNode);
+            cout << endl;
         }
     }
 
@@ -173,9 +224,17 @@ public:
 
     void isListEmpty() {}
 
-    void countNodes() {
-        Node<T>* currNode = headNode;
-
+    int countNodes() {
+        if (headNode == nullptr) {
+            return 0;
+        }
+        auto* currNode = headNode->nextNode;
+        int count = 1;
+        while (currNode != headNode) {
+            currNode = currNode->nextNode;
+            count++;
+        }
+        return count;
     }
 
     // Optional advanced
@@ -195,15 +254,15 @@ int main() {
 
     list.insertAtHead(MonopolyBoard("Mediterranean Avenue", "Brown", 60, 2));
 
-    //list.insertAtTail(MonopolyBoard("Baltic Avenue","Brown",60,4));
+    list.insertAtTail(MonopolyBoard("Baltic Avenue","Brown",60,4));
 
-    //list.insertAtPosition(MonopolyBoard("a", "a", 1, 1), 0);
+    list.insertAtPosition(MonopolyBoard("a", "a", 1, 1), 0);
 
     list.deleteAtHead();
 
     list.deleteAtTail();
 
-    list.deleteAtPosition();
+    list.deleteAtPosition(3);
 
     list.printList();
 
@@ -213,7 +272,7 @@ int main() {
     list.printHeadNode();
     list.printLastNode();
     list.isListEmpty();
-    list.countNodes();
+    cout << list.countNodes() << " node(s) in the list.";
 
     // Optional advanced
     list.convertCLList();
