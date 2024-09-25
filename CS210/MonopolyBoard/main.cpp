@@ -170,8 +170,8 @@ public:
         } else if (headNode == nullptr) {
             cout << "Empty List" << endl;
         } else {
-            /* easiest way for me to check for valid positions without affecting performance or complexity is to
-             * get length list and compare, so I can just reuse the tail deletion or throw away delete request */
+            /* check list length, if less than position, position is invalid, if position and length are equal,
+             * the deletion is at the end */
             const int length = this->countNodes();
             if (position == length) {
                 deleteAtTail();
@@ -193,8 +193,19 @@ public:
         }
     }
 
-    void search(T value) {
-
+    bool search(T value) {
+        if (headNode == nullptr) {
+            cout << "Empty List" << endl;
+        } else {
+            auto *currNode = headNode;
+            do {
+                if (currNode->data.isEqual(value)) {
+                    return true;
+                }
+                    currNode = currNode->nextNode;
+            } while (currNode != headNode);
+        }
+        return false;
     }
 
     void printList() {
