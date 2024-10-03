@@ -79,7 +79,6 @@ public:
             currNode->nextNode = headNode;
 
         }
-        cout << "Inserted "; data.print(); cout << " at head" << endl;
     }
 
     void insertAtTail(T data) {
@@ -95,30 +94,28 @@ public:
             currNode->nextNode = new Node<T>(data);
             currNode->nextNode->nextNode = headNode;
         }
-        cout << "Inserted "; data.print(); cout << " at tail" << endl;
     }
 
-    void insertAtPosition(T data, const int position) {
-        if (position < 0) {
+    void insertAtPosition(T data, int position) {
+        const int index = position - 1;
+        if (index < 0) {
             cout << "Please enter a positive position" << endl;
-        } else if (position == 0) {
+        } else if (index== 0) {
             insertAtHead(data);
         } else if (headNode == nullptr) {
             headNode = new Node<T>(data);
             headNode->nextNode = headNode;
         } else {
             auto* currNode = headNode;
-            for (int i = 0; i < position-1; i++) {
+            for (int i = 0; i < index-1; i++) {
                 currNode = currNode->nextNode;
                 if (currNode == headNode && currNode->nextNode != headNode) {
-                    cout << "Invalid insertion at position " << position << endl;
                     return;
                 }
             }
             Node<T>* tempNode = currNode->nextNode;
             currNode->nextNode = new Node<T>(data);
             currNode->nextNode->nextNode = tempNode;
-            cout << "Inserted "; data.print(); cout << " at position " << position << endl;
         }
     }
 
@@ -137,7 +134,6 @@ public:
                 Node<T>* toDelete = headNode;
                 headNode = headNode->nextNode;
                 currNode->nextNode = headNode;
-                cout << "Deleted "; toDelete->data.print(); cout << " from head" << endl;
                 delete toDelete;
             }
         }
@@ -157,16 +153,16 @@ public:
                 }
                 Node<T>* toDelete = currNode->nextNode;
                 currNode->nextNode = headNode;
-                cout << "Deleted "; toDelete->data.print(); cout << " from tail" << endl;
                 delete toDelete;
             }
         }
     }
 
-    void deleteAtPosition(const int position) {
-        if (position < 0) {
+    void deleteAtPosition(int position) {
+        const int index = position -= 1;
+        if (index < 0) {
             cout << "Please enter a positive position" << endl;
-        } else if (position == 0) {
+        } else if (index == 0) {
             deleteAtHead();
         } else if (headNode == nullptr) {
             cout << "Empty List" << endl;
@@ -174,22 +170,21 @@ public:
             /* check list length, if less than position, position is invalid, if position and length are equal,
              * the deletion is at the end */
             const int length = this->countNodes();
-            if (position == length) {
+            if (index == length) {
                 deleteAtTail();
                 return;
             }
-            if (position > length) {
+            if (index> length) {
                 cout << "Invalid deletion at position " << position << endl;
                 return;
             }
 
             auto* currNode = headNode;
-            for (int i = 0; i < position-1; i++) {
+            for (int i = 0; i < index-1; i++) {
                 currNode = currNode->nextNode;
             }
             Node<T>* toDelete = currNode->nextNode;
             currNode->nextNode = currNode->nextNode->nextNode;
-            cout << "Deleted "; toDelete->data.print(); cout << " from position " << position << endl;
             delete toDelete;
         }
     }
@@ -243,7 +238,22 @@ public:
         headNode = prevNode;
     }
 
-    void sortCLList() {}
+    void sortCLList() {
+        int length = this->countNodes();
+        bool swapped = false;
+        do {
+            swapped = false;
+            auto* currNode = headNode;
+            for (int i=1; i<length; i++) {
+                auto* nextNode = currNode->nextNode;
+                if (currNode->data.propertyName.compare(nextNode->data.propertyName) > 0) {
+                    swap(currNode->data, nextNode->data);
+                    swapped = true;
+                }
+                currNode = nextNode;
+            }
+        } while (swapped);
+    }
 
     void printHeadNode() {
         if (headNode == nullptr) {
@@ -285,7 +295,19 @@ public:
     }
 
     // Optional advanced
-    void convertCLList() {}
+    void convertCLList() {
+        if (headNode!= nullptr) {
+            auto* tailNode = headNode;
+            while (tailNode->nextNode != headNode && tailNode->nextNode != nullptr) {
+                tailNode = tailNode->nextNode;
+            }
+            if (tailNode->nextNode == headNode) {
+                tailNode->nextNode = nullptr;
+            } else {
+                tailNode->nextNode = headNode;
+            }
+        }
+    }
 
     void updateNodeValue(const int position, T data) {
         if (position < 0) {
@@ -306,9 +328,39 @@ public:
         }
     }
 
-    void displaySpecificColorNode() {}
+    void displaySpecificColorNode(string color) {
+        auto* currNode = headNode;
+        int count = 0;
+        cout << "Displaying: " << color << endl;
+        for (int _=0; _<this->countNodes(); _++) {
+            if (currNode->data.propertyColor == color) {
+                if (count != 0) {
+                  cout << ", ";
+                }
+                currNode->data.print(); cout << "";
+                count ++;
+            }
 
-    void mergeCLList() {}
+            currNode = currNode->nextNode;
+        }
+    }
+
+    void mergeCLList(CircularLinkedList<T> list) {
+        if (headNode == nullptr) {
+            headNode = list.headNode;
+        } else {
+            auto* tailNode = headNode;
+            while (tailNode->nextNode != headNode) {
+                tailNode = tailNode->nextNode;
+            }
+            auto* listTailNode = list.headNode;
+            while (listTailNode->nextNode != list.headNode) {
+                listTailNode = listTailNode->nextNode;
+            }
+            tailNode->nextNode = list.headNode;
+            listTailNode->nextNode = headNode;
+        }
+    }
 
 };
 
@@ -317,38 +369,67 @@ int main() {
     CircularLinkedList<MonopolyBoard> list;
 
     list.insertAtHead(MonopolyBoard("Baltic Avenue", "Brown", 60, 2));
+    cout << "~~ Inserted Baltic Avenue at head" << endl;
 
     list.insertAtTail(MonopolyBoard("Connecticut Avenue","Light Blue",120,8));
+    cout << "~~ Inserted Connecticut Avenue at tail" << endl;
 
     list.insertAtPosition(MonopolyBoard("Mediterranean Avenue", "Brown", 60, 2), 1);
+    cout << "~~ Inserted Mediterranean Avenue at position 2" << endl << endl;
 
-    list.insertAtTail(MonopolyBoard("Vermont Avenue","Light Blue",100,6));
-    list.insertAtTail(MonopolyBoard("St. Charles Place", "Pink", 140, 12));
-    list.insertAtHead(MonopolyBoard("Wrong Place", "Nope!", 60, 50));
-    list.insertAtTail(MonopolyBoard("Another wrong place!", "Rainbow!", 10000, 100));
-    list.insertAtPosition(MonopolyBoard("OP place", "Meow", 1337, 69), 4);
+    cout << "~~ Current list"; list.printList();
+
+    // Generating a fuller board, last 3 nodes in the code will be deleted
+    list.insertAtHead(MonopolyBoard("Go", "Green", 0, 0));
+    list.insertAtHead(MonopolyBoard("Somewhere awesome", "ahhhh", 60, 50));
+    list.insertAtTail(MonopolyBoard("OP place", "augh", 10000, 100));
+    list.insertAtPosition(MonopolyBoard("Filler place", "Meow", 1337, 69), 4);
+    cout << "~~ Added filler places for delete demonstration";
+    list.printList();
+
     list.deleteAtHead();
+    cout << "~~ Deleted \"Somewhere awesome\" from head" << endl;
 
     list.deleteAtTail();
+    cout << "~~ Deleted \"OP place\" from tail" << endl;
 
     list.deleteAtPosition(3);
+    cout << "~~ Deleted \"Filler place\" from position 3" << endl << endl;
 
-    cout << "Initial"; list.printList();
+    cout << "~~ New list"; list.printList();
 
     // Optional basic
     list.reverseCList();
-    cout << "Reversed"; list.printList();
-    list.sortCLList();
+    cout << "~~ Reversed"; list.printList();
+    cout << "~~ Sorted"; list.sortCLList();
+    list.printList();
+    cout << "~~ Printing head and last node:" << endl;
     list.printHeadNode();
     list.printLastNode();
+    cout << endl << "~~ Checking isListEmpty()" << endl;
     list.isListEmpty();
-    cout << list.countNodes() << " node(s) in the list." << endl;
+
+    cout << endl << "~~ Checking countNodes()" << endl;
+    cout << list.countNodes() << " node(s) in the list" << endl << endl;
 
     // Optional advanced
+    cout << "~~ Converting list to a Linked List" << endl;
     list.convertCLList();
-    list.updateNodeValue(0, MonopolyBoard("b","b",60,4));
-    list.displaySpecificColorNode();
-    list.mergeCLList();
+    cout << "~~ Converting back to a Circular List" << endl << endl;
+    list.convertCLList();
+    //converting back because my circular functions rely on it being circular, but check the code, it works!
 
+    list.updateNodeValue(0, MonopolyBoard("Balloon Place","Light Blue",100,4));
+    cout << "~~ Updated Baltic Avenue to Balloon Place"; list.printList();
+
+    list.displaySpecificColorNode("Light Blue");
+    cout << endl << endl;
+
+    CircularLinkedList<MonopolyBoard> newList;
+    newList.insertAtHead(MonopolyBoard("Park Place", "Dark Blue", 80, 3));
+    newList.insertAtTail(MonopolyBoard("Boardwalk", "Dark Blue", 200, 8));
+    cout << "~~ List to merge"; newList.printList();
+    list.mergeCLList(newList);
+    cout << "~~ Main list after merging"; list.printList();
     return 0;
 }
