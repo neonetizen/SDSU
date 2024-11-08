@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <limits>
 #include "Node.h"
 #include "Story.h"
 
@@ -63,10 +64,26 @@ public:
 
     // Function to start the game and traverse the tree based on user input
     void playGame() {
-        string decision;
-        do {
+        int decision;
+        Node<T>* currentNode = root;
 
-        } while(decision != "quit" || decision != "exit" || decision != "q");
+        cout << "=============================\n"
+                "         Game Title          \n"
+                "=============================\n";
+        cout << "Please press Enter or any key to continue..." << endl;
+        string io;
+        getline(cin, io);
+
+        do {
+            cin >> decision;
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Please enter a number between 1-4. \n";
+                continue;
+            }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } while(decision != -1);
     }
 };
 
