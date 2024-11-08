@@ -43,10 +43,19 @@ public:
         }
 
         for (auto& pair : nodeMap) {
-            if (pair.first == 1) {
-                root = pair.second;
-            }
-            
+            int i = pair.first;
+            Node<Story>* currentNode = pair.second;
+
+            if (currentNode->data.eventNumber == 1)
+                root = currentNode;
+
+            int left_event = currentNode->data.leftEventNumber;
+            if (left_event > 0 && nodeMap.count(left_event))
+                currentNode->left = nodeMap.at(left_event);
+
+            int right_event = currentNode->data.rightEventNumber;
+            if (right_event > 0 && nodeMap.count(right_event))
+                currentNode->right = nodeMap.at(right_event);
         }
 
         fFile.close();
@@ -54,7 +63,10 @@ public:
 
     // Function to start the game and traverse the tree based on user input
     void playGame() {
-        cout << root->data.description << "\n";
+        string decision;
+        do {
+
+        } while(decision != "quit" || decision != "exit" || decision != "q");
     }
 };
 
