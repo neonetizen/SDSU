@@ -1,0 +1,8 @@
+# ninja log v6
+12	540	7542802663095446	CMakeFiles/Hashtables.dir/HashFunction.cpp.obj	55c2647329805dd9
+604	892	7542802669012910	Hashtables.exe	9bbe4dc5d0d903ea
+3	286	7542813744459624	build.ninja	b215517518a347da
+6	604	7542802663045402	CMakeFiles/Hashtables.dir/main.cpp.obj	2c467624a8b63be1
+16	686	7542821839696647	CMakeFiles/Hashtables.dir/HashFunction.cpp.obj	200bf43a71abd5eb
+11	842	7542821839651687	CMakeFiles/Hashtables.dir/main.cpp.obj	c51c08e2b91a268f
+842	1205	7542821847963657	Hashtables.exe	9bbe4dc5d0d903ea
