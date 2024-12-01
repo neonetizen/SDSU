@@ -53,9 +53,10 @@ public:
     }
   }
 
-  int main() {
-    testHashFunction();
+};
+int main() {
+    HashFunction hashFunction;
+    hashFunction.testHashFunction();
     cout << "\n## The hash function deals with collisions with linear probing ##";
     return 0;
   }
-};
