@@ -1,3 +1,7 @@
+#' ---
+#' author: "Justin Pelak"
+#' ---
+
 # 1.41 Modify the code in the R script CoinFlip.R to simulate the probability of
 # getting exactly one head in four coin tosses.
 # R: SIMULATING THE PROBABILITY OF THREE HEADS IN THREE COIN TOSSES
