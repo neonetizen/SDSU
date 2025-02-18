@@ -1,0 +1,34 @@
+---
+title: "Homework 7"
+author: "Justin Pelak"
+date: "2025-02-18"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Homework 7
+## Let X ~ Pois(lambda). Find E[X!]. For what value of (lambda) does the expectation not exist?
+
+$P(X=k)=\dfrac{(e^{-\lambda}\cdot \lambda^k)}{k!}$, so $E[X!]=\sum\limits_{k=0}^{\infty}k!P(X=k)=\sum\limits_{k=0}^{\infty}k!\Bigg(\dfrac{(e^{-\lambda}\cdot \lambda^k)}{k!}\Bigg)=e^{-\lambda}\sum\limits_{k=0}^{\infty}\lambda^k=\dfrac{(e^{-\lambda})}{(1-\lambda)}$
+
+```{r num10}
+E_X_factorial=function(lambda,k_max=1000) {
+  if (lambda >= 1) {
+    return(Inf)
+  }
+  k = 0:k_max
+  terms=lambda^k
+  sum_terms = sum(terms)
+  expect=exp(-lambda)*sum_terms
+  return(expect)
+}
+
+lambdas=c(0.1,0.5,0.9,0.99,1,2)
+for (lambda in lambdas) {
+  num=E_X_factorial(lambda)
+  print(sprintf("Lambda: %.2f, Output: %f", lambda, num))
+}
+```

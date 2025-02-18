@@ -1,0 +1,32 @@
+---
+title: "Homework 7"
+author: "Justin Pelak"
+date: "2025-02-18"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Homework 7
+## A bag contains one red, two blue, three green, and four yellow balls. A sample of three balls is taken without replacement. Let upper B be the number of blue balls and Y the number of yellow balls in the sample.
+## Simulate the mean and variance of the total number of blue and yellow balls in the sample.
+
+```{r num14}
+bag=c("R","B","B","G","G","G","G",replicate(4,"Y"))
+simulation=function() {
+  pull=sample(bag, 3, replace=FALSE)
+  B=sum(pull=="B")
+  Y=sum(pull=="Y")
+  return(c(B,Y))
+}
+n=10000
+sims=replicate(n, simulation())
+meanB=mean(sims[1, ])
+meanY=mean(sims[2, ])
+varB=var(sims[1, ])
+varY=var(sims[2, ])
+print(sprintf("Mean of blues: %.2f, mean of yellows: %.2f", meanB, meanY))
+print(sprintf("Variance of blues: %.2f, variance of yellows: %.2f", varB, varY))
+```

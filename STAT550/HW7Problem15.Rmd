@@ -1,0 +1,29 @@
+---
+title: "Homework 7"
+author: "Justin Pelak"
+date: "2025-02-18"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Homework 7
+## Play the dice game described in Example 4.3 multiple times. Estimate both the expected value and variance of your earnings.
+## (For reference: Example 4.3 The following dice game cost $10 to play. If you roll 1, 2, or 3, you lose your money. If you roll 4 or 5, you get your money back. If you roll a 6, you win $24.)
+### Hint: if you lose it is -10, getting money back is 0, and winnings is 14.
+
+```{r num15}
+dice=c(1:6)
+outcome=c(-10,-10,-10,0,0,14)
+n=100000
+results=numeric(n)
+for (i in 1:n) {
+  roll=sample(dice,1)
+  results[i]=outcome[roll]
+}
+expected=mean(results)
+variance=var(results)
+print(sprintf("Expected: %.2f, variance: %.2f", expected, variance))
+```
