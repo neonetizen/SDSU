@@ -1,5 +1,5 @@
 ---
-title: "RCodingASsignment3"
+title: "RCodingAssignment3"
 author: "Justin Pelak"
 date: "`r Sys.Date()`"
 output: pdf_document
