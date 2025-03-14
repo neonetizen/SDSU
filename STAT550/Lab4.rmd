@@ -126,6 +126,7 @@ samp = sample(pop,3) # draw 3 marbles
 blues = sum(samp=="b") # number of blue marbles drawn
 yellows = sum(samp=="y") # number of yellow marbles drawn
 c(blues, yellows) # just checking how many blue and yellow marbles are drawn
+print(sprintf("%d blues %d yellows", blues, yellows))
 ```
 
 For this task, you will repeat this experiment 10,000 times.  You still need to store the number of blue and yellow marbles from each experiment.  The easiest way is to just turn the `blue` and `yellow` variables into vectors in which to store the values each step of a for-loop over the 10,000 experiments.
@@ -136,6 +137,7 @@ A note, the `table` command in R is a handy way of summarizing output.  In parti
 
 Perform a simulation experiment of drawing three marbles from the bag 10,000 times.  I have initialized storage vectors for you.
 ```{r task2, echo=TRUE}
+library(ggplot2)
 # True values:
 # P(0 blue) = 56/120; P(1 blue) = 56/120; P(2 blue) = 8/120
 # P(0 Y) = 20/120; P(1 Y) = 60/120; P(2 Y) = 36/120; P(3 Y) = 4/120
@@ -144,7 +146,22 @@ simnum = 10000 # number of experiments
 # for each of the 10,000 runs of the experiment.
 blues=numeric(simnum); yellows=numeric(simnum)
 
-# [Place code here]
+for (i in 1:simnum) {
+  samp = sample(pop, 3)
+  blues[i] = sum(samp=="b")
+  yellows[i] = sum(samp=="y")
+}
+
+df = data.frame(
+    Color=c("Blue", "Yellow"),
+    Zero=c(sum(blues==0),sum(yellows==0)),
+    One=c(sum(blues==1),sum(yellows==1)),
+    Two=c(sum(blues==2),sum(yellows==2)),
+    Three=c(sum(blues==3),sum(yellows==3)),
+    Total=c(sum(blues),sum(yellows))
+)
+print(df)
+
 ```
 
 ### Reporting and questions
