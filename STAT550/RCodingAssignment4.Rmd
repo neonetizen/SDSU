@@ -1,8 +1,8 @@
 ---
-title: "RCodingAssignment4"
+title: "R Coding Assignment 4"
 author: "Justin Pelak"
 date: "`r Sys.Date()`"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -12,78 +12,108 @@ knitr::opts_chunk$set(echo = TRUE)
 ## 1. Traffic accidents at a particular intersection follow Poisson distribution with an average rate of 1.4 per week.
 ### a) What is the probability that the next week is accident-free?
 ```{r trafficA, echo=TRUE}
-
+lambda = 1.4
+x = 0
+print(dpois(x, lambda))
 ```
 
 ### b) What is the probability that there will be exactly 3 accidents next week?
 ```{r trafficB, echo=TRUE}
-
+x = 3
+print(dpois(x, lambda))
 ```
 
 ### c) What is the probability that there will be at most 2 accidents next week?
 ```{r trafficC, echo=TRUE}
-
+x = 2
+print(ppois(x, lambda, lower.tail=F))
 ```
 
 ### d) What is the probability that there will be at least 2 accidents during the next two weeks?
 ```{r trafficD, echo=TRUE}
-
+lambda = 1.4*2
+print(ppois(x-1, lambda, lower.tail=F))
 ```
 
 ### e) What is the probability that there will be exactly 5 accidents during the next four weeks?
 ```{r trafficE, echo=TRUE}
-
+lambda = 1.4*4
+x = 5
+print(dpois(x, lambda))
 ```
 
 ### f) What is the probability that there will be exactly 2 accidents tomorrow?
 ```{r trafficF, echo=TRUE}
-
+lambda = 1.4 * (1/7)
+x = 2
+print(dpois(x, lambda))
 ```
 
 ### g) What is the probability that the next accident will not occur for three days?
 ```{r trafficG, echo=TRUE}
-
+lambda = 1.4 * (3/7)
+x = 0
+print(ppois(x, lambda))
 ```
 
 ## 2. In Major League Baseball’s Home Run Derby, each contestant is allowed to keep swinging the bat until they have made 10 “outs”. (An “out” is anything that is not a home run.) If Barry Bonds has a 70% chance of hitting a home run on any given swing, what is the probability that he hits at least 10 home runs before his turn is up?
 ```{r MLB, echo=TRUE}
-
+p = 0.3
+r = 10
+k = 19
+print(pnbinom(k, r, p))
 ```
 
 ## 3. A quarterback completes 44% of his passes. We want to observe this quarterback during one game to see how many pass attempts he makes before completing one pass.
 ### a) What is the probability that the quarterback throws 3 incomplete passes before he has a completion?
 ```{r qbPassA, echo=TRUE}
-
+k = 3
+p = 0.44
+print(pgeom(k-1, p))
 ```
 
 ### b) Determine the probability that it takes more than 5 attempts before he completes a pass.
 ```{r qbPassB, echo=TRUE}
-
+k = 5
+print(pgeom(k, p, lower.tail=F))
 ```
 
 ## 4. Suppose a telemarketer has a 15% chance of making a sale on any given phone call. He is required to make 10 successful sales before leaving for the day. What is the probability that he needs to make more than 40 calls?
 ```{r sales, echo=TRUE}
-
+p = 0.15
+r = 10
+k = 40
+print(1-pnbinom(k, r, p))
 ```
 
 ## 5. A company (the producer) supplies microprocessors to a manufacturer (the consumer) of electronic equipment. The microprocessors are supplied in batches of 50. The consumer regards a batch as acceptable provided that there are not more than 5 defective microprocessors in the batch. Rather than test all of the microprocessors in the batch, 10 are selected at random and tested.
 ### a) Find the probability that out of a sample of 10, d = 0, 1, 2, 3, 4, 5 are defective when there are actually 5 defective microprocessors in the batch.
 ```{r microDefectA, echo=TRUE}
-
+N = 50
+n = 10
+r = 5
+for (k in 0:5) {
+  print(k)
+  print(dhyper(k, r, N-r, n))
+}
 ```
 
 ### b) Suppose that the consumer will accept the batch provided that not more than m=2 defectives are found in the sample of 10.
 #### i) Find the probability that the batch is accepted when there are 5 defectives in the batch.
 ```{r microDefectBi, echo=TRUE}
-
+k=2
+print(phyper(k, r, N-r, n))
 ```
 
 #### ii) Find the probability that the batch is rejected when there are 3 defectives in the batch.
 ```{r microDefectBii, echo=TRUE}
-
+r=3
+print(phyper(k, r, N-r, n, lower.tail=F))
 ```
 
 ## 6. In a certain town, 40% of the eligible voters prefer candidate A, 10% prefer candidate B, and the remaining 50% have no preference. You randomly sample 10 eligible voters. What is the probability that 4 will prefer candidate A, 1 will prefer candidate B, and the remaining 5 will have no preference?
 ```{r voter, echo=TRUE}
-
+voters = c(4,1,5)
+probs = c(0.40, 0.10, 0.50)
+print(dmultinom(voters, prob=probs))
 ```
