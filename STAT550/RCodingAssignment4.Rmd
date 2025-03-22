@@ -1,0 +1,89 @@
+---
+title: "RCodingAssignment4"
+author: "Justin Pelak"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Traffic accidents at a particular intersection follow Poisson distribution with an average rate of 1.4 per week.
+### a) What is the probability that the next week is accident-free?
+```{r trafficA, echo=TRUE}
+
+```
+
+### b) What is the probability that there will be exactly 3 accidents next week?
+```{r trafficB, echo=TRUE}
+
+```
+
+### c) What is the probability that there will be at most 2 accidents next week?
+```{r trafficC, echo=TRUE}
+
+```
+
+### d) What is the probability that there will be at least 2 accidents during the next two weeks?
+```{r trafficD, echo=TRUE}
+
+```
+
+### e) What is the probability that there will be exactly 5 accidents during the next four weeks?
+```{r trafficE, echo=TRUE}
+
+```
+
+### f) What is the probability that there will be exactly 2 accidents tomorrow?
+```{r trafficF, echo=TRUE}
+
+```
+
+### g) What is the probability that the next accident will not occur for three days?
+```{r trafficG, echo=TRUE}
+
+```
+
+## 2. In Major League Baseball’s Home Run Derby, each contestant is allowed to keep swinging the bat until they have made 10 “outs”. (An “out” is anything that is not a home run.) If Barry Bonds has a 70% chance of hitting a home run on any given swing, what is the probability that he hits at least 10 home runs before his turn is up?
+```{r MLB, echo=TRUE}
+
+```
+
+## 3. A quarterback completes 44% of his passes. We want to observe this quarterback during one game to see how many pass attempts he makes before completing one pass.
+### a) What is the probability that the quarterback throws 3 incomplete passes before he has a completion?
+```{r qbPassA, echo=TRUE}
+
+```
+
+### b) Determine the probability that it takes more than 5 attempts before he completes a pass.
+```{r qbPassB, echo=TRUE}
+
+```
+
+## 4. Suppose a telemarketer has a 15% chance of making a sale on any given phone call. He is required to make 10 successful sales before leaving for the day. What is the probability that he needs to make more than 40 calls?
+```{r sales, echo=TRUE}
+
+```
+
+## 5. A company (the producer) supplies microprocessors to a manufacturer (the consumer) of electronic equipment. The microprocessors are supplied in batches of 50. The consumer regards a batch as acceptable provided that there are not more than 5 defective microprocessors in the batch. Rather than test all of the microprocessors in the batch, 10 are selected at random and tested.
+### a) Find the probability that out of a sample of 10, d = 0, 1, 2, 3, 4, 5 are defective when there are actually 5 defective microprocessors in the batch.
+```{r microDefectA, echo=TRUE}
+
+```
+
+### b) Suppose that the consumer will accept the batch provided that not more than m=2 defectives are found in the sample of 10.
+#### i) Find the probability that the batch is accepted when there are 5 defectives in the batch.
+```{r microDefectBi, echo=TRUE}
+
+```
+
+#### ii) Find the probability that the batch is rejected when there are 3 defectives in the batch.
+```{r microDefectBii, echo=TRUE}
+
+```
+
+## 6. In a certain town, 40% of the eligible voters prefer candidate A, 10% prefer candidate B, and the remaining 50% have no preference. You randomly sample 10 eligible voters. What is the probability that 4 will prefer candidate A, 1 will prefer candidate B, and the remaining 5 will have no preference?
+```{r voter, echo=TRUE}
+
+```
