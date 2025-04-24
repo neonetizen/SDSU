@@ -3,9 +3,7 @@ title: 'Lab 6: Simulating functions of continuous random variables'
 author: "Professor Scott"
 date: "Spring 2025"
 output:
-  word_document: default
-  html_document:
-    df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -113,12 +111,17 @@ The following code will draw a histogram of your variates, $x$, along with a den
 Use the Box-Muller algorithm to simulate 1000 random variates of $X \sim N(2,\ 2)$.  
 ```{r box-muller, echo=TRUE}
 N = 1000
-U1 = runif(N,0,1)
-U2 = runif(N,0,1)
-Z1 = numeric(N)
-Z2 = numeric(N)
+Z = matrix(ncol=2, nrow=N)
+X = numeric(N)
+Y = numeric(N)
+
 for (i in 1:N) {
-  
+  U1 = runif(1,0,1)
+  U2 = runif(1,0,1)
+  Z[i,1]=sqrt(-2*log(U1))*cos(2*pi*U2)
+  Z[i,2]=sqrt(-2*log(U1))*sin(2*pi*U2)
+  X[i]=sqrt(2)*Z[i,1]+2
+  Y[i]=sqrt(2)*Z[i,2]+2
 }
 ```
 
@@ -126,18 +129,39 @@ for (i in 1:N) {
 
 a) Mean, standard deviation, and median of the variates. 
 
-*[Answer here]*
+```{r var_stats, echo=TRUE}
+mean(X)
+mean(Y)
+sd(X)
+sd(Y)
+median(X)
+median(Y)
+```
 
 
 b) Histogram of the variates and an overlay with the true density.
 
+```{r var_hist}
+hist(X, xlab="N(2,2) variates", main="", freq=FALSE)
+lines(seq(-4,8,0.05), dnorm(seq(-4,8,0.05),2,sqrt(2)),col="blue")
+```
 
 c) The proportion of simulated values out of the 1000 that lie one, two, and three standard deviations from the mean (that is, within $\mu \pm \sigma$, $\mu \pm 2 \sigma$, and $\mu \pm 3 \sigma$).  These percentages are estimates of $P(\mu - i \sigma < X < \mu + i \sigma)$ for $i = 1, 2, 3$.
 
-*[Answer here]*
+```{r var_stddev, echo=TRUE}
+print(sprintf("One std dev above: %f", pnorm(mean(X)+sd(X),2,2,lower.tail=FALSE)))
+print(sprintf("One std dev below: %f", pnorm(mean(X)-sd(X),2,2)))
+print(sprintf("Within one std dev: %f", pnorm(mean(X)+sd(X),2,2)-pnorm(mean(X)-sd(X),2,2)))
+print(sprintf("Two std dev above: %f", pnorm(mean(X)+2*sd(X),2,2,lower.tail=FALSE)))
+print(sprintf("Two std dev below: %f", pnorm(mean(X)-2*sd(X),2,2)))
+print(sprintf("Within two std devs: %f", pnorm(mean(X)+2*sd(X),2,2)-pnorm(mean(X)-2*sd(X),2,2)))
+print(sprintf("Three std dev above: %f", pnorm(mean(X)+3*sd(X),2,2,lower.tail=FALSE)))
+print(sprintf("Three std dev below: %f", pnorm(mean(X)-3*sd(X),2,2)))
+print(sprintf("Within three std devs: %f", pnorm(mean(X)+3*sd(X),2,2)-pnorm(mean(X)-3*sd(X),2,2)))
+```
 
 
 d) The true values of the three probabilities in (c) are 0.68, 0.95, and 0.997 respectively.  Compare your estimates from (c) with the true values.  This is called the ``68-95-99.7" rule for the Gaussian/Normal distribution.
 
-*[Answer here]*
+*The probabilities are somewhat close, but definitely not exact. It seems like, for an approximation, it would be close enough to get ballpark guesses. As the standard deviations increase, it seems like the estimation gets better.*
 
